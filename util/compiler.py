@@ -94,6 +94,11 @@ class ModelCompiler():
             elif (self.analogConvLayers[i].r_s != 0 and self.analogConvLayers[i].ds == False):
                 self.analogConvLayers[i].set_qs(self.analogConvLayers[i].bn_bs-self.analogConvLayers[i].q_s)
 
+    def _hw_tune_convLayers(self):
+        for i in range(len(self.analogConvLayers)):
+            if self.analogConvLayers[i].ds == False:
+                self.analogConvLayers[i].set_qs(self.analogConvLayers[i].q_s)
+
     def compile(self, image : ModelInputClass = None):
         self._populate_convLayers(image)
         self._process_convLayers()
